@@ -1,13 +1,15 @@
 package com.example.demo.model;
 
-import java.util.List;
+import java.util.Date;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,34 +17,33 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Getter
 @Setter
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+public class Answer {
 
-
-public class User {
 
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Id
     private Long id;
 
-     @Column(nullable=false)
-    private String userName;
+    private String text;
 
-     @Column(nullable=false)
-    private String email;
-
-    @Column(nullable=true)
-    private String bio;
-
-    @OneToMany(mappedBy="user")
-    private List<Question> questions;
+    @Temporal(value=TemporalType.TIMESTAMP)
+    private Date created_at;
 
 
+    
+    @ManyToOne
+    @JoinColumn(name="question_id")
+    private Question question;
 
 
-    @OneToMany(mappedBy="answerUser")
-    private List<Answer> answers;
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User answerUser;
+
+
 }

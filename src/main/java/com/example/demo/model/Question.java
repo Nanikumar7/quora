@@ -12,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
@@ -38,11 +39,6 @@ public class Question {
     @Column(nullable=false)
     private String body;
 
-
-    // @OneToMany(mappedBy="question")
-    // private List<Topic> topicIds;
-
-
     @ManyToMany
     @JoinTable(
         name="question_topics",
@@ -57,6 +53,17 @@ public class Question {
     private Date created_at;
     
    @ManyToOne
+   @JoinColumn(name="user_id")
    private User user;
+
+   ///////////////////////
+
+   @OneToMany(mappedBy="question")
+   private List<Answer> answers;
+
+
+
+
+
     
 }
